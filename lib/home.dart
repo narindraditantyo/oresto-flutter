@@ -12,29 +12,49 @@ class HomePage extends StatelessWidget {
         future: DefaultAssetBundle.of(context).loadString('assets/local_restaurant.json'),
         builder: (context, snapshot) {
           final List<Restaurant> restaurant = parseRestaurant(snapshot.data);
-          return ListView.builder(
-            itemCount: restaurant.length,
-            itemBuilder: (context, index) {
-              return _restaurantCard(context, restaurant[index], restaurant.length, index);
-            }
+          return SafeArea(
+            minimum: EdgeInsets.only(
+              top: 16.0,
+              left: 16.0,
+              right: 16.0
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Recommended Restaurant"
+                ),
+                Text(
+                  "Recommended restaurant"
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: restaurant.length,
+                    itemBuilder: (context, index) {
+                      return _restaurantCard(context, restaurant[index]);
+                    }
+                  ),
+                ),
+              ],
+            ),
           );
         }
       )
     );
   }
 
-  Widget _restaurantCard(BuildContext context, Restaurant restaurant, int length, int currentIndex) {
+  Widget _restaurantCard(BuildContext context, Restaurant restaurant) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, '/detailPage', arguments: restaurant);
+      },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.amber,
           borderRadius: BorderRadius.circular(8.0)
         ),
         margin: EdgeInsets.only(
-          left: 16.0,
-          bottom: 8.0,
-          right: 16.0
+          bottom: 8.0
         ),
         padding: EdgeInsets.all(16.0),
         child: Row(

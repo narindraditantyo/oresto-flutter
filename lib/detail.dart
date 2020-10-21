@@ -15,39 +15,47 @@ class RestaurantDetail extends StatelessWidget {
             SliverAppBar(
               leading: IconButton(
                 icon: Icon(Icons.arrow_back),
-                onPressed: () {}
+                onPressed: () {
+                  Navigator.pop(context);
+                }
               ),
               pinned: true,
               expandedHeight: 200,
               flexibleSpace: FlexibleSpaceBar(
-                background: Image.network(
-                  restaurant.pictureId,
-                  fit: BoxFit.cover,
+                background: Stack(
+                  children: [
+                    Image.network(
+                      restaurant.pictureId,
+                      alignment: Alignment.center,
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xff121212), Color(0xff121212).withOpacity(0.1)],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 title: Text(
                   restaurant.name
                 ),
-                titlePadding: EdgeInsets.only(
-                  left: 16.0,
-                  bottom: 16.0
-                ),
+                centerTitle: true,
               ),
             )
           ];
         },
-        body: SingleChildScrollView(
+        body: Container(
           child: Column(
             children: [
               Text(
-                restaurant.name
-              ),
-              Text(
                 restaurant.city
               ),
-              Expanded(
-                child: Text(
-                  restaurant.desc
-                )
+              Text(
+                restaurant.desc
               ),
               Text(
                 "Foods"

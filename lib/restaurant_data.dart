@@ -20,7 +20,7 @@ class Restaurant {
   Restaurant.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     name = json["name"];
-    desc = json["desc"];
+    desc = json["description"];
     pictureId = json["pictureId"];
     city = json["city"];
     rating = json["rating"].toDouble();
