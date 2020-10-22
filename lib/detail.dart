@@ -19,22 +19,28 @@ class RestaurantDetail extends StatelessWidget {
                   Navigator.pop(context);
                 }
               ),
+              backgroundColor: Color(0xff003049),
               pinned: true,
               expandedHeight: 200,
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   children: [
-                    Image.network(
-                      restaurant.pictureId,
-                      alignment: Alignment.center,
-                      fit: BoxFit.cover,
+                    Hero(
+                      tag: restaurant.pictureId,
+                      child: Image.network(
+                        restaurant.pictureId,
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.center,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Color(0xff121212), Color(0xff121212).withOpacity(0.1)],
                           begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter
+                          end: Alignment.topCenter,
+                          
                         ),
                       ),
                     ),
@@ -49,20 +55,35 @@ class RestaurantDetail extends StatelessWidget {
           ];
         },
         body: Container(
+          margin: EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                restaurant.city
+              Row(
+                children: [
+                  Icon(
+                  Icons.location_on,
+                    size: 16.0,
+                  ),
+                  SizedBox(width: 2.0),
+                  Text(
+                    restaurant.city,
+                    style: Theme.of(context).textTheme.subtitle1,
+                    
+                  ),
+                ],
               ),
+              SizedBox(height: 16.0),
               Text(
-                restaurant.desc
+                "Descriptions",
+                style: Theme.of(context).textTheme.headline6
               ),
+              SizedBox(height: 4.0),
               Text(
-                "Foods"
+                restaurant.desc,
+                style: Theme.of(context).textTheme.bodyText2,
+                textAlign: TextAlign.justify
               ),
-              Text(
-                "Drinks"
-              )
             ],
           ),
         )

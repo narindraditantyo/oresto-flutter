@@ -14,7 +14,7 @@ class Restaurant {
     this.desc,
     this.pictureId,
     this.city,
-    this.rating,
+    this.rating
   });
 
   Restaurant.fromJson(Map<String, dynamic> json) {
