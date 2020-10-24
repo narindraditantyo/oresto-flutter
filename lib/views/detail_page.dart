@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:oresto/restaurant_data.dart';
+import 'package:oresto/data/api/api_service.dart';
+import 'package:oresto/data/model/restaurant_detail.dart';
+import 'package:oresto/data/model/restaurant_list.dart';
 
-class RestaurantDetail extends StatelessWidget {
-  final Restaurant restaurant;
+class DetailPage extends StatefulWidget {
+  final RestaurantList restoData;
 
-  const RestaurantDetail({ @required this.restaurant });
+  const DetailPage({ @required this.restoData });
+
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  Future<RestaurantDetail> _restoDetail;
+
+  @override
+  void initState() {
+    _restoDetail = ApiServices().getRestaurantDetail(restoData.id);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +41,9 @@ class RestaurantDetail extends StatelessWidget {
                 background: Stack(
                   children: [
                     Hero(
-                      tag: restaurant.pictureId,
+                      tag: widget.restaurant.pictureId,
                       child: Image.network(
-                        restaurant.pictureId,
+                        widget.restaurant.pictureId,
                         width: MediaQuery.of(context).size.width,
                         alignment: Alignment.center,
                         fit: BoxFit.cover,
@@ -47,7 +62,7 @@ class RestaurantDetail extends StatelessWidget {
                   ],
                 ),
                 title: Text(
-                  restaurant.name
+                  widget.restaurant.name
                 ),
                 centerTitle: true,
               ),
@@ -67,7 +82,7 @@ class RestaurantDetail extends StatelessWidget {
                   ),
                   SizedBox(width: 2.0),
                   Text(
-                    restaurant.city,
+                    widget.restaurant.city,
                     style: Theme.of(context).textTheme.subtitle1,
                     
                   ),
@@ -80,7 +95,7 @@ class RestaurantDetail extends StatelessWidget {
               ),
               SizedBox(height: 4.0),
               Text(
-                restaurant.desc,
+                widget.restaurant.desc,
                 style: Theme.of(context).textTheme.bodyText2,
                 textAlign: TextAlign.justify
               ),
