@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oresto/data/api/api_service.dart';
 import 'package:oresto/data/model/restaurant_list.dart';
+import 'package:oresto/widgets/resto_list_card.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -22,6 +23,17 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("oResto"),
         backgroundColor: Color(0xff003049),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Color(0xffF5F6F8),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/searchPage');
+            }
+          )
+        ],
       ),
       body: FutureBuilder(
         future: _restoList,
@@ -62,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                       itemCount: snapshot.data.restaurants.length,
                       itemBuilder: (context, index) {
                         var restoData = snapshot.data.restaurants[index];
-                        return _restaurantCard(context, restoData);
+                        return RestaurantCard(restoData: restoData);
                       },
                     ),
                   ],
@@ -86,86 +98,6 @@ class _HomePageState extends State<HomePage> {
           }
         }
       )
-    );
-  }
-
-  Widget _restaurantCard(BuildContext context, Restaurant restaurant) {
-    return InkWell(
-      onTap: () {
-        // print(restaurant.foods);
-        Navigator.pushNamed(context, '/detailPage', arguments: restaurant.id);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color(0xffF5F6F8),
-          borderRadius: BorderRadius.circular(8.0),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xff121212).withOpacity(0.25),
-              offset: Offset(4.0, 4.0),
-              blurRadius: 4.0
-            )
-          ]
-        ),
-        margin: EdgeInsets.only(
-          left: 16.0,
-          bottom: 8.0,
-          right: 16.0
-        ),
-        padding: EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Hero(
-              tag: restaurant.pictureId,
-              child: Image.network(
-                restaurant.pictureId,
-                width: 160,
-                height: 120,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(width: 16.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    restaurant.name,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 16.0,
-                      ),
-                      SizedBox(width: 2.0),
-                      Text(
-                        restaurant.city,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.0),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        size: 14.0,
-                      ),
-                      SizedBox(width: 2.0),
-                      Text(
-                        restaurant.rating.toString(),
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oresto/views/detail_page.dart';
 import 'package:oresto/views/home_page.dart';
 import 'package:oresto/common/styles.dart';
+import 'package:oresto/views/search_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/detailPage': (context) => DetailPage(restoData: ModalRoute.of(context).settings.arguments)
+        '/detailPage': (context) => DetailPage(restoId: ModalRoute.of(context).settings.arguments),
+        '/searchPage': (context) => SearchPage()
       },
     );
   }
